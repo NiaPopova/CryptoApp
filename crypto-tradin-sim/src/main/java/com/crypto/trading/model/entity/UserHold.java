@@ -19,7 +19,6 @@ import java.math.BigDecimal;
 @Setter
 public class UserHold {
     @EmbeddedId
-    @Setter(AccessLevel.NONE)
     private UserHoldId id;
 
     @ManyToOne
@@ -34,5 +33,8 @@ public class UserHold {
 
     @Column(name = "QUANTITY")
     private BigDecimal quantity;
+
+    @Column(name = "PRICE")
+    private BigDecimal price;
 
 }

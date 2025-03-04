@@ -27,7 +27,4 @@ public class CryptoCurrency {
 
     @Column(name = "SYMBOL")
     private String symbol;
-
-    @Column(name = "PRICE")
-    private BigDecimal price;
 }
