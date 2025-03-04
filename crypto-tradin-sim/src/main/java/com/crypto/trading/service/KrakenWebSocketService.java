@@ -69,7 +69,7 @@ public class KrakenWebSocketService {
     }
 
     @OnClose
-    public void onClose(Session session, CloseReason reason) {
+    public void onClose(CloseReason reason) {
         LOGGER.warn("WebSocket closed: {}. Reconnecting...", reason);
         try {
             Thread.sleep(5000);
@@ -84,7 +84,7 @@ public class KrakenWebSocketService {
             {
                 "event": "subscribe",
                 "pair": [
-                    "BTC/USD", "ETH/USD", "BNB/USD", "ADA/USD", "SOL/USD", 
+                    "BTC/USD", "ETH/USD", "BNB/USD", "ADA/USD", "SOL/USD",
                     "XRP/USD", "DOT/USD", "DOGE/USD", "LTC/USD", "LINK/USD",
                     "AVAX/USD", "MATIC/USD", "UNI/USD", "SHIB/USD", "LUNA/USD",
                     "ALGO/USD", "ATOM/USD", "VET/USD", "AAVE/USD", "FIL/USD",
