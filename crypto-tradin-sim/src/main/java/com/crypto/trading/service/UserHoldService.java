@@ -21,8 +21,6 @@ public class UserHoldService {
     private UserRepository userRepository;
 
     public List<UserHold> getAllTransactionsByEmail(String email) {
-        checkEmail(email);
-
         Optional<User> opt = userRepository.findByEmail(email);
         if (opt.isPresent()) {
             List<UserHold> holds = userHoldRepository.findByIdUserId(opt.get().getUserId());
@@ -35,11 +33,4 @@ public class UserHoldService {
         }
     }
 
-    private void checkEmail(String email) {
-        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
-
-        if (email == null || !email.matches(emailRegex)) {
-            throw new IllegalArgumentException("Invalid email!");
-        }
-    }
 }

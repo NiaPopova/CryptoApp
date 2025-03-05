@@ -38,9 +38,6 @@ public class TransactionsService {
     public Transaction buyCrypto(String email, String symbol,
                                  BigDecimal quantity,
                                  String transactionType) {
-
-        checkEmail(email);
-
         Optional<User> optUser = userRepository.findByEmail(email);
         if (optUser.isEmpty()) {
             throw new NoSuchElementException("User not found");
@@ -93,9 +90,6 @@ public class TransactionsService {
     public Transaction sellCrypto(String email, String symbol,
                                   BigDecimal quantity,
                                   String transactionType) {
-
-        checkEmail(email);
-
         Optional<User> optUser = userRepository.findByEmail(email);
         if (optUser.isEmpty()) {
             throw new NoSuchElementException("User not found");
@@ -149,14 +143,6 @@ public class TransactionsService {
         userRepository.save(user);
 
         return makeTransaction(transactionType, quantity, amount, cryptoPrice, user, crypto);
-    }
-
-    private void checkEmail(String email) {
-        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
-
-        if (email == null || !email.matches(emailRegex)) {
-            throw new IllegalArgumentException("Invalid email!");
-        }
     }
 
     private Transaction makeTransaction(String transactionType, BigDecimal quantity, BigDecimal amount,

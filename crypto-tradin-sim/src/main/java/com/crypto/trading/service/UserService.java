@@ -19,7 +19,7 @@ public class UserService {
     @Autowired
     private UserHoldRepository userHoldRepository;
 
-    public User getUserBalance(String email) {
+    public User login(String email) {
         checkEmail(email);
 
         Optional<User> opt = userRepository.findByEmail(email);
@@ -31,8 +31,20 @@ public class UserService {
         }
     }
 
+    public User getUserBalance(String email) {
+        // checkEmail(email);
+
+        Optional<User> opt = userRepository.findByEmail(email);
+
+        if (opt.isPresent()) {
+            return opt.get();
+        } else {
+            throw new NoSuchElementException("There is no user with the email " + email);
+        }
+    }
+
     public User resetAccount(String email) {
-        checkEmail(email);
+        //checkEmail(email);
 
         Optional<User> opt = userRepository.findByEmail(email);
 
