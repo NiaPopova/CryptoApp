@@ -1,5 +1,6 @@
 package com.crypto.trading.service;
 
+import com.crypto.trading.exception.UnsupportedCryptoException;
 import jakarta.websocket.ClientEndpoint;
 import jakarta.websocket.CloseReason;
 import jakarta.websocket.ContainerProvider;
@@ -15,7 +16,6 @@ import jakarta.annotation.PostConstruct;
 
 import java.net.URI;
 import java.math.BigDecimal;
-import java.util.NoSuchElementException;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -105,7 +105,7 @@ public class KrakenWebSocketService {
 
     public BigDecimal getLatestPrice(String symbol) {
         if (!cryptoPrices.containsKey(symbol + "/USD")) {
-            throw new NoSuchElementException("not supported now");
+            throw new UnsupportedCryptoException("not supported now");
         }
 
         return cryptoPrices.getOrDefault(symbol + "/USD", BigDecimal.ZERO);
