@@ -1,5 +1,9 @@
 package com.crypto.trading.service;
 
+import com.crypto.trading.exception.AssetNotOwnedException;
+import com.crypto.trading.exception.InsufficientBalanceException;
+import com.crypto.trading.exception.NotFoundException;
+import com.crypto.trading.exception.UnsupportedCryptoException;
 import com.crypto.trading.model.entity.CryptoCurrency;
 import com.crypto.trading.model.entity.Transaction;
 import com.crypto.trading.model.entity.TransactionType;
@@ -40,7 +44,7 @@ public class TransactionsService {
                                  String transactionType) {
         Optional<User> optUser = userRepository.findByEmail(email);
         if (optUser.isEmpty()) {
-            throw new NoSuchElementException("User not found");
+            throw new NotFoundException("User not found");
         }
 
         User user = optUser.get();
@@ -49,14 +53,14 @@ public class TransactionsService {
 
         Optional<CryptoCurrency> optCrypto = cryptoCurrencyRepository.findBySymbol(symbol);
         if (optCrypto.isEmpty()) {
-            throw new NoSuchElementException("we dont support sales with this crypto currency");
+            throw new UnsupportedCryptoException("We don't support sales with this crypto currency!");
         }
 
         CryptoCurrency crypto = optCrypto.get();
         BigDecimal cryptoPrice = krakenWebSocketService.getLatestPrice(symbol);
 
         if (balance.compareTo(quantity.multiply(cryptoPrice)) < 0) {
-            throw new IllegalArgumentException("Your balance is not enough to make a transaction");
+            throw new InsufficientBalanceException("Your balance is not enough to make a transaction");
         }
 
         BigDecimal amount = quantity.multiply(cryptoPrice);
@@ -101,7 +105,7 @@ public class TransactionsService {
 
         Optional<CryptoCurrency> optCrypto = cryptoCurrencyRepository.findBySymbol(symbol);
         if (optCrypto.isEmpty()) {
-            throw new NoSuchElementException("we don't support sales with this crypto currency");
+            throw new UnsupportedCryptoException("We don't support sales with this crypto currency");
         }
 
         CryptoCurrency crypto = optCrypto.get();
@@ -109,7 +113,7 @@ public class TransactionsService {
         BigDecimal cryptoPrice = krakenWebSocketService.getLatestPrice(symbol);
 
         if (balance.compareTo(quantity.multiply(cryptoPrice)) < 0) {
-            throw new IllegalArgumentException("Your balance is not enough to make a transaction");
+            throw new InsufficientBalanceException("Your balance is not enough to make a transaction");
         }
 
         BigDecimal amount = quantity.multiply(cryptoPrice);
@@ -127,7 +131,7 @@ public class TransactionsService {
             int compare = userHold.getQuantity().compareTo(quantity);
 
             if (compare < 0) {
-                throw new IllegalArgumentException("Yo dont have enough of the crypto currency!");
+                throw new InsufficientBalanceException("You dont have enough of the crypto currency!");
             } else if (compare == 0) {
                 userHoldRepository.deleteAllById(userHoldId);
             } else {
@@ -136,7 +140,7 @@ public class TransactionsService {
             }
 
         } else {
-            throw new NoSuchElementException("Ypu dont own any cryptocurrency of this type!");
+            throw new AssetNotOwnedException("You don't own any cryptocurrency of this type!");
         }
 
         user.setBalance(balance.add(amount));
