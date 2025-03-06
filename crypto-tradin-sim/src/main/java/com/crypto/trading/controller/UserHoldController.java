@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("user/hold")
+@RequestMapping("/user/hold")
 public class UserHoldController {
 
     @Autowired
@@ -29,6 +29,6 @@ public class UserHoldController {
                                                           HttpServletRequest request) {
         SessionManager.validateLogin(request, email);
         return ResponseEntity.ok(
-            userHoldService.getAllTransactionsByEmail(email).stream().map(userHoldMapper::userHoldToDto).toList());
+            userHoldService.getAllUserHolds(email).stream().map(userHoldMapper::userHoldToDto).toList());
     }
 }
