@@ -16,6 +16,8 @@ import jakarta.annotation.PostConstruct;
 
 import java.net.URI;
 import java.math.BigDecimal;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -109,5 +111,9 @@ public class KrakenWebSocketService {
         }
 
         return cryptoPrices.getOrDefault(symbol + "/USD", BigDecimal.ZERO);
+    }
+
+    public Map<String, BigDecimal> getCryptoPrices() {
+        return new LinkedHashMap<>(cryptoPrices);
     }
 }
