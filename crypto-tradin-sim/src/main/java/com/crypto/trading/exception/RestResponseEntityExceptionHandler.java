@@ -23,7 +23,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
             new HttpHeaders(), HttpStatus.UNAUTHORIZED, request);
     }
 
-    @ExceptionHandler(value = {AssetNotOwnedException.class, UnsupportedCryptoException.class})
+    @ExceptionHandler(value = {AssetNotOwnedException.class, UnsupportedCryptoException.class, UnsupportedTransactionTypeException.class})
     protected ResponseEntity<Object> handleBadRequestExceptionsException(
         RuntimeException ex, WebRequest request) {
         return handleExceptionInternal(ex, buildResponseBody(ex, request, "Bad Request", HttpStatus.BAD_REQUEST),

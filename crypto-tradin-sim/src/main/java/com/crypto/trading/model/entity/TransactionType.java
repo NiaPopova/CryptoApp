@@ -1,9 +1,11 @@
 package com.crypto.trading.model.entity;
 
+import com.crypto.trading.exception.UnsupportedTransactionTypeException;
+
 public enum TransactionType {
     BUY("BUY"), SELL("SELL");
 
-    private String value;
+    private final String value;
 
     TransactionType(String value) {
         this.value = value;
@@ -19,6 +21,6 @@ public enum TransactionType {
                 return t;
             }
         }
-        throw new IllegalArgumentException("Invalid transaction type: " + value);
+        throw new UnsupportedTransactionTypeException("Invalid transaction type: " + value);
     }
 }
