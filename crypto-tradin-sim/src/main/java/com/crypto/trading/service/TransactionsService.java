@@ -43,7 +43,7 @@ public class TransactionsService {
     public List<Transaction> getAllUserTransactions(String email) {
         Optional<User> optUser = userRepository.findByEmail(email);
         if (optUser.isEmpty()) {
-            throw new NoSuchElementException("User not found");
+            throw new NotFoundException("User not found");
         }
 
         User user = optUser.get();
