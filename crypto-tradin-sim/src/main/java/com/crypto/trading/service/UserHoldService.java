@@ -21,7 +21,7 @@ public class UserHoldService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<UserHold> getAllTransactionsByEmail(String email) {
+    public List<UserHold> getAllUserHolds(String email) {
         Optional<User> opt = userRepository.findByEmail(email);
         if (opt.isPresent()) {
             List<UserHold> holds = userHoldRepository.findByIdUserId(opt.get().getUserId());
