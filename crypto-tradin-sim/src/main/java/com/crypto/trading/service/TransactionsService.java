@@ -59,6 +59,10 @@ public class TransactionsService {
         if (quantity.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("You must enter a positive quantity");
         }
+
+        if (!transactionType.equalsIgnoreCase("buy")) {
+            throw new IllegalArgumentException("You must enter a valid transaction type");
+        }
         Optional<User> optUser = userRepository.findByEmail(email);
         if (optUser.isEmpty()) {
             throw new NotFoundException("User not found");
@@ -113,6 +117,11 @@ public class TransactionsService {
         if (quantity.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("You must enter a positive quantity");
         }
+
+        if (!transactionType.equalsIgnoreCase("sell")) {
+            throw new IllegalArgumentException("You must enter a valid transaction type");
+        }
+
         Optional<User> optUser = userRepository.findByEmail(email);
         if (optUser.isEmpty()) {
             throw new NoSuchElementException("User not found");
