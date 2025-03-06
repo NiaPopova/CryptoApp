@@ -24,7 +24,7 @@ public class UserHoldController {
     @Autowired
     private UserHoldMapper userHoldMapper;
 
-    @GetMapping("/transactions")
+    @GetMapping("/allHolds")
     public ResponseEntity<List<UserHoldDTO>> getUserHolds(@RequestParam(name = "email") String email,
                                                           HttpServletRequest request) {
         SessionManager.validateLogin(request, email);
