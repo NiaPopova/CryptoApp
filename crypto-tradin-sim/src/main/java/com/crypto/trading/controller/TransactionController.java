@@ -1,6 +1,6 @@
 package com.crypto.trading.controller;
 
-import com.crypto.trading.SessionManager;
+import com.crypto.trading.utils.SessionManager;
 import com.crypto.trading.model.dto.TransactionDTO;
 import com.crypto.trading.model.mapper.TransactionMapper;
 import com.crypto.trading.service.TransactionsService;

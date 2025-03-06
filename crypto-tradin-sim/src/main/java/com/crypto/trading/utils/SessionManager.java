@@ -1,4 +1,4 @@
-package com.crypto.trading;
+package com.crypto.trading.utils;
 
 import com.crypto.trading.exception.UnauthorizedException;
 import jakarta.servlet.http.HttpServletRequest;
