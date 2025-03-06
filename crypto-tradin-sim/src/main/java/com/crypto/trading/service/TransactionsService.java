@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -39,6 +40,19 @@ public class TransactionsService {
     @Autowired
     private KrakenWebSocketService krakenWebSocketService;
 
+    public List<Transaction> getAllUserTransactions(String email) {
+        Optional<User> optUser = userRepository.findByEmail(email);
+        if (optUser.isEmpty()) {
+            throw new NoSuchElementException("User not found");
+        }
+
+        User user = optUser.get();
+
+        List<Transaction> transactions = transactionRepository.findAllByUserUserId(user.getUserId());
+
+        return transactions;
+    }
+
     public Transaction buyCrypto(String email, String symbol,
                                  BigDecimal quantity,
                                  String transactionType) {
@@ -46,7 +60,6 @@ public class TransactionsService {
         if (optUser.isEmpty()) {
             throw new NotFoundException("User not found");
         }
-
         User user = optUser.get();
 
         BigDecimal balance = user.getBalance();
