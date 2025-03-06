@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("user/hold")
@@ -30,7 +29,6 @@ public class UserHoldController {
                                                           HttpServletRequest request) {
         SessionManager.validateLogin(request, email);
         return ResponseEntity.ok(
-            userHoldService.getAllTransactionsByEmail(email).stream().map(userHoldMapper::userHoldToDto).collect(
-                Collectors.toList()));
+            userHoldService.getAllTransactionsByEmail(email).stream().map(userHoldMapper::userHoldToDto).toList());
     }
 }
