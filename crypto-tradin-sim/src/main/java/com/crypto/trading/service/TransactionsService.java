@@ -56,6 +56,9 @@ public class TransactionsService {
     public Transaction buyCrypto(String email, String symbol,
                                  BigDecimal quantity,
                                  String transactionType) {
+        if (quantity.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("You must enter a positive quantity");
+        }
         Optional<User> optUser = userRepository.findByEmail(email);
         if (optUser.isEmpty()) {
             throw new NotFoundException("User not found");
@@ -107,6 +110,9 @@ public class TransactionsService {
     public Transaction sellCrypto(String email, String symbol,
                                   BigDecimal quantity,
                                   String transactionType) {
+        if (quantity.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("You must enter a positive quantity");
+        }
         Optional<User> optUser = userRepository.findByEmail(email);
         if (optUser.isEmpty()) {
             throw new NoSuchElementException("User not found");
