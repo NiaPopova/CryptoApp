@@ -1,5 +1,6 @@
 package com.crypto.trading.service;
 
+import com.crypto.trading.exception.NotFoundException;
 import com.crypto.trading.model.entity.User;
 import com.crypto.trading.repository.UserHoldRepository;
 import com.crypto.trading.repository.UserRepository;
@@ -27,7 +28,7 @@ public class UserService {
         if (opt.isPresent()) {
             return opt.get();
         } else {
-            throw new NoSuchElementException("There is no user with the email " + email);
+            throw new NotFoundException("There is no user with the email " + email);
         }
     }
 
